@@ -54,7 +54,7 @@ const App = () => {
         } catch (exception) {
             setNotification({
                 type: 'error',
-                text: 'Wrong credentials',
+                text: 'Wrong credentials. Either the username or password is wrong.',
             });
             setTimeout(() => {
                 setNotification(null);
@@ -95,14 +95,23 @@ const App = () => {
     const createNewBlog = async (event) => {
         event.preventDefault();
 
+        setNotification({
+            type: 'error',
+            text: 'Test Blog title and url are required.',
+        });
+        setTimeout(() => {
+            setNotification(null);
+        }, 3000);
+
         if (!title || !url) {
+            console.log('no title || url');
             setNotification({
-                text: 'Blog title and url are required.',
                 type: 'error',
+                text: 'Blog title and url are required.',
             });
             setTimeout(() => {
                 setNotification(null);
-            }, 5000);
+            }, 3000);
             return null;
         }
 
@@ -113,6 +122,10 @@ const App = () => {
                 url,
             });
             setBlogs(blogs.concat(newBlog));
+            setNotification({
+                text: `a new blog ${title} by ${author} added.`,
+                type: 'success',
+            });
             setTitle('');
             setAuthor('');
             setUrl('');
@@ -124,16 +137,16 @@ const App = () => {
     const newBlogForm = () => (
         <form onSubmit={createNewBlog}>
             <div>
-                title:{' '}
+                Title:
                 <input
                     type="text"
                     value={title}
-                    name="Title"
+                    name="Title: "
                     onChange={({ target }) => setTitle(target.value)}
                 />
             </div>
             <div>
-                author:{' '}
+                Author:{' '}
                 <input
                     type="text"
                     value={author}
@@ -142,11 +155,11 @@ const App = () => {
                 />
             </div>
             <div>
-                url:{' '}
+                Url:{' '}
                 <input
                     type="text"
                     value={url}
-                    name="Url"
+                    name="Url: "
                     onChange={({ target }) => setUrl(target.value)}
                 />
             </div>
@@ -166,6 +179,7 @@ const App = () => {
             {user && (
                 <div>
                     <h2>blogs</h2>
+                    <Notification notification={notification} />
                     <p>{user.name} logged in.</p>{' '}
                     <button onClick={() => handleLogout()}> logout </button>
                     <h2> create new </h2>
