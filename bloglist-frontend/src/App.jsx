@@ -15,6 +15,7 @@ const App = () => {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [url, setUrl] = useState('');
+    const [isNewBlogFormVisible, setIsNewBlogFormVisible] = useState(false);
 
     /**
      * Fetch all blogs
@@ -183,7 +184,21 @@ const App = () => {
                     <p>{user.name} logged in.</p>{' '}
                     <button onClick={() => handleLogout()}> logout </button>
                     <h2> create new </h2>
-                    {newBlogForm()}
+                    {!isNewBlogFormVisible && (
+                        <button onClick={() => setIsNewBlogFormVisible(true)}>
+                            create new blog
+                        </button>
+                    )}
+                    {isNewBlogFormVisible && (
+                        <div>
+                            {newBlogForm()}
+                            <button
+                                onClick={() => setIsNewBlogFormVisible(false)}
+                            >
+                                cancel
+                            </button>
+                        </div>
+                    )}
                     {blogs.map((blog) => (
                         <Blog key={blog.id} blog={blog} />
                     ))}
