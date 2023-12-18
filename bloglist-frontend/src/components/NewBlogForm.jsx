@@ -1,3 +1,5 @@
+// import { useState } from 'react';
+
 const NewBlogForm = ({
     onSubmit,
     title,
@@ -19,7 +21,7 @@ const NewBlogForm = ({
                 />
             </div>
             <div>
-                Author:{' '}
+                Author:
                 <input
                     type="text"
                     value={author}
@@ -28,7 +30,7 @@ const NewBlogForm = ({
                 />
             </div>
             <div>
-                Url:{' '}
+                Url:
                 <input
                     type="text"
                     value={url}
