@@ -24,6 +24,7 @@ const createBlog = async (newBlog) => {
     };
 
     const response = await axios.post(baseUrl, newBlog, authorization);
+    console.log(response.data);
     return response.data;
 };
 

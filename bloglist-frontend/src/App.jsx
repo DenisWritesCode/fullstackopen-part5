@@ -73,14 +73,6 @@ const App = () => {
     const addBlog = async (event) => {
         event.preventDefault();
 
-        setNotification({
-            type: 'error',
-            text: 'Test Blog title and url are required.',
-        });
-        setTimeout(() => {
-            setNotification(null);
-        }, 3000);
-
         if (!title || !url) {
             console.log('no title || url');
             setNotification({
@@ -99,6 +91,8 @@ const App = () => {
                 author,
                 url,
             });
+
+            console.log('newBlog: ', newBlog);
             setBlogs(blogs.concat(newBlog));
             setNotification({
                 text: `a new blog ${title} by ${author} added.`,
