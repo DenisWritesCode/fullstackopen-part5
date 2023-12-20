@@ -24,7 +24,7 @@ const App = () => {
      */
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs));
-    }, []);
+    }, [blogs]);
 
     /**
      * Check if we have a logged in user in the local storage.
@@ -115,6 +115,9 @@ const App = () => {
                 text: `a new blog ${title} by ${author} added.`,
                 type: 'success',
             });
+            setTimeout(() => {
+                setNotification(null);
+            }, 1000);
             setTitle('');
             setAuthor('');
             setUrl('');

@@ -18,21 +18,23 @@ const Blog = ({ blog }) => {
     return (
         <div style={blogStyle}>
             <span>
-                {blog.title} {blog.author}&nbsp;
+                Title: {blog.title} Author: {blog.author}&nbsp;
                 <button onClick={() => setShowBlogDetails(!showBlogDetails)}>
                     {showBlogDetails ? 'hide' : 'view'}
                 </button>
             </span>
             {showBlogDetails && (
                 <div>
-                    <a href={blog.url}>{blog.url}</a>
                     <p>
-                        likes {blog.likes}{' '}
+                        link: <a href={blog.url}>{blog.url}</a>
+                    </p>
+                    <p>
+                        likes: {blog.likes}{' '}
                         <button onClick={(blog) => handleLikeClick(blog)}>
                             like
                         </button>
                     </p>
-                    <p>{blog.user.username}</p>
+                    <p>user created: {blog.user.name}</p>
                 </div>
             )}
         </div>
