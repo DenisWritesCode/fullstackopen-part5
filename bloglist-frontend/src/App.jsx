@@ -24,7 +24,13 @@ const App = () => {
      * Fetch all blogs
      */
     useEffect(() => {
-        blogService.getAll().then((blogs) => setBlogs(blogs));
+        blogService
+            .getAll()
+            .then((blogs) => {
+                blogs.sort((a, b) => b.likes - a.likes);
+                return blogs;
+            })
+            .then((blogs) => setBlogs(blogs));
     }, [refreshBlogs]);
 
     /**
