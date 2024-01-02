@@ -1,11 +1,7 @@
 import { useState } from 'react';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleLikeClick }) => {
     const [showBlogDetails, setShowBlogDetails] = useState(false);
-
-    const handleLikeClick = (blog) => {
-        console.log('like clicked', blog);
-    };
 
     const blogStyle = {
         paddingTop: 10,
@@ -30,9 +26,7 @@ const Blog = ({ blog }) => {
                     </p>
                     <p>
                         likes: {blog.likes}{' '}
-                        <button onClick={(blog) => handleLikeClick(blog)}>
-                            like
-                        </button>
+                        <button onClick={handleLikeClick}>like</button>
                     </p>
                     <p>user created: {blog.user.name}</p>
                 </div>

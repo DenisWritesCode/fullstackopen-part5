@@ -9,6 +9,7 @@ import NewBlogForm from './components/NewBlogForm';
 
 const App = () => {
     const [blogs, setBlogs] = useState([]);
+    const [refreshBlogs, setRefreshBlogs] = useState(false);
     const [notification, setNotification] = useState(null);
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -24,7 +25,7 @@ const App = () => {
      */
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs));
-    }, [blogs]);
+    }, [refreshBlogs]);
 
     /**
      * Check if we have a logged in user in the local storage.
@@ -111,6 +112,7 @@ const App = () => {
 
             console.log('newBlog: ', newBlog);
             setBlogs(blogs.concat(newBlog));
+            setRefreshBlogs(!refreshBlogs);
             setNotification({
                 text: `a new blog ${title} by ${author} added.`,
                 type: 'success',
@@ -124,6 +126,18 @@ const App = () => {
         } catch (exception) {
             console.log(exception);
         }
+    };
+
+    // Blog actions
+    const handleLikeClick = async (blog) => {
+        console.log('like clicked', blog);
+        const likedBlog = {
+            ...blog,
+            likes: blog.likes + 1,
+        };
+
+        await blogService.updateBlog(likedBlog);
+        setRefreshBlogs(!refreshBlogs);
     };
 
     return (
@@ -151,7 +165,11 @@ const App = () => {
                     {blogForm()}
                     <h2>Blogs</h2>
                     {blogs.map((blog) => (
-                        <Blog key={blog.id} blog={blog} />
+                        <Blog
+                            key={blog.id}
+                            blog={blog}
+                            handleLikeClick={() => handleLikeClick(blog)}
+                        />
                     ))}
                 </div>
             )}
