@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Blog = ({ blog, handleLikeClick }) => {
+const Blog = ({ blog, handleLikeClick, handleDelete, loggedInUser }) => {
     const [showBlogDetails, setShowBlogDetails] = useState(false);
 
     const blogStyle = {
@@ -10,6 +10,16 @@ const Blog = ({ blog, handleLikeClick }) => {
         border: 'solid',
         borderWidth: 1,
         marginBottom: 5,
+    };
+
+    // check if the blog.user.id matches the currently logged in user and then show the delete button.
+    const showDeleteButton =
+        blog.user.username === loggedInUser.username ? true : false;
+
+    const handleDeleteClick = () => {
+        if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+            handleDelete();
+        }
     };
     return (
         <div style={blogStyle}>
@@ -29,6 +39,9 @@ const Blog = ({ blog, handleLikeClick }) => {
                         <button onClick={handleLikeClick}>like</button>
                     </p>
                     <p>user created: {blog.user.name}</p>
+                    {showDeleteButton && (
+                        <button onClick={handleDeleteClick}>remove</button>
+                    )}
                 </div>
             )}
         </div>

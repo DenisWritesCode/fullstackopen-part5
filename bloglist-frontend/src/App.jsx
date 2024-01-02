@@ -134,15 +134,24 @@ const App = () => {
         }
     };
 
-    // Blog actions
+    /**
+     * Blog actions
+     */
+    // Like
     const handleLikeClick = async (blog) => {
-        console.log('like clicked', blog);
         const likedBlog = {
             ...blog,
             likes: blog.likes + 1,
         };
 
         await blogService.updateBlog(likedBlog);
+        setRefreshBlogs(!refreshBlogs);
+    };
+
+    // Delete
+    const handleDelete = async (blog) => {
+        blogService.setToken(user.token);
+        await blogService.deleteBlog(blog);
         setRefreshBlogs(!refreshBlogs);
     };
 
@@ -175,6 +184,8 @@ const App = () => {
                             key={blog.id}
                             blog={blog}
                             handleLikeClick={() => handleLikeClick(blog)}
+                            handleDelete={() => handleDelete(blog)}
+                            loggedInUser={user}
                         />
                     ))}
                 </div>
